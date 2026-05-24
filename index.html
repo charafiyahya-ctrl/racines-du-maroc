@@ -1164,16 +1164,17 @@ footer {
 }
 
 .lang-btn {
-  background: none;
-  border: none;
-  color: rgba(248,242,230,0.50);
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.4);
+  color: #E8C96A;
   font-family: 'Montserrat', sans-serif;
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 0.15em;
-  font-weight: 500;
+  font-weight: 700;
   cursor: pointer;
-  transition: color 0.3s;
-  padding: 4px 2px;
+  transition: all 0.3s;
+  padding: 8px 14px;
+  border-radius: 4px;
 }
 
 .lang-btn:hover { color: var(--or); }
@@ -1214,9 +1215,9 @@ body.lang-ar .hero-stats { right: 100px; left: auto; }
   </ul>
   <div class="nav-actions">
     <div class="lang-switcher">
-      <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
       <span class="lang-sep">·</span>
-      <button class="lang-btn" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
     </div>
     <a href="https://racines-du-maroc.myshopify.com" target="_blank" class="nav-btn" data-fr="Boutique →" data-en="Shop →">Boutique →</a>
   </div>
@@ -1580,103 +1581,23 @@ body.lang-ar .hero-stats { right: 100px; left: auto; }
 <a href="https://wa.me/212600000000?text=Bonjour, je suis intéressé par vos créations Racines du Maroc" target="_blank" id="wa-btn">💬</a>
 
 
+
+
+
+
 <script>
-  const CONFIG = {
-    shopifyURL: "https://racines-du-maroc.myshopify.com",
-    whatsapp: "+212600000000"
-  };
-
-  function setLang(lang) {
-    // Boutons actifs
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.classList.remove('active');
-      if (btn.textContent.toLowerCase() === lang) btn.classList.add('active');
-    });
-
-    // Elements simples avec data-fr / data-en
-    document.querySelectorAll('[data-fr]').forEach(el => {
-      const text = el.getAttribute('data-' + lang) || el.getAttribute('data-fr');
-      if (!text) return;
-      if (el.tagName === 'INPUT') {
-        el.placeholder = text;
-      } else {
-        el.textContent = text;
-      }
-    });
-
-    // Titres avec HTML interne
-    const htmlBlocks = {
-      '.collections .section-title': {
-        fr: 'Nos <em>Collections</em><br>d'Exception',
-        en: 'Our <em>Collections</em><br>of Excellence'
-      },
-      '.produits .section-title': {
-        fr: 'Pi&egrave;ces <em>Vedettes</em>',
-        en: 'Featured <em>Pieces</em>'
-      },
-      '.maison-content .section-title': {
-        fr: 'La Maison<br><em>Racines du Maroc</em>',
-        en: 'The House<br><em>Racines du Maroc</em>'
-      },
-      '.nl-title': {
-        fr: 'Acc&egrave;s <em>Privil&eacute;gi&eacute;</em><br>aux Nouvelles Pi&egrave;ces',
-        en: 'Exclusive <em>Access</em><br>to New Pieces'
-      }
-    };
-    Object.entries(htmlBlocks).forEach(function(entry) {
-      var el = document.querySelector(entry[0]);
-      if (el) el.innerHTML = entry[1][lang] || entry[1].fr;
-    });
-
-    // Paragraphe hero
-    var heroDesc = document.querySelector('.hero-desc');
-    if (heroDesc) heroDesc.textContent = lang === 'en'
-      ? 'Kaftan, Djellaba, Babouches and Art of Living - exceptional pieces crafted by Moroccan artisans, delivered across Europe.'
-      : 'Kaftan, Djellaba, Babouches et Art de Vivre - des pieces d exception faconnees par les artisans marocains, livrees partout en Europe.';
-
-    // Paragraphe maison
-    var maisonP = document.querySelector('.maison-content > p');
-    if (maisonP) maisonP.textContent = lang === 'en'
-      ? 'Each piece is carefully selected from Moroccan artisans - weavers from Fes, embroiderers from Marrakech, potters from Safi. We bring this exceptional heritage to your door across Europe.'
-      : 'Chaque piece est selectionnee directement aupres des artisans marocains - tisserands de Fes, brodeurs de Marrakech, potiers de Safi.';
-
-    // Citation
-    var archQuote = document.querySelector('.arch-quote');
-    if (archQuote) archQuote.innerHTML = lang === 'en'
-      ? '"Every thread tells<br>the story of a people<br>and their beauty"'
-      : '"Chaque fil raconte<br>l histoire d un peuple<br>et de sa beaute"';
-
-    // Placeholder newsletter
-    var nlInput = document.querySelector('.nl-input');
-    if (nlInput) nlInput.placeholder = lang === 'en' ? 'Your email address...' : 'Votre adresse email...';
-
-    // Footer description
-    var footerDesc = document.querySelector('.footer-brand-desc');
-    if (footerDesc) footerDesc.textContent = lang === 'en'
-      ? 'Exceptional Moroccan fashion delivered across Europe. Authentic craftsmanship, unique pieces.'
-      : 'Mode traditionnelle marocaine d exception livree partout en Europe. Artisanat authentique.';
-
-    // Footer titres colonnes
-    var h4Fr = ['Collections', 'Information', 'Legal'];
-    var h4En = ['Collections', 'Information', 'Legal'];
-    document.querySelectorAll('.footer-col h4').forEach(function(h4, i) {
-      h4.textContent = lang === 'en' ? h4En[i] : h4Fr[i];
-    });
-
-    // Footer bottom
-    var spans = document.querySelectorAll('.footer-bottom span');
-    if (spans[0]) spans[0].textContent = lang === 'en'
-      ? '2026 Racines du Maroc - All rights reserved'
-      : '2026 Racines du Maroc - Tous droits reserves';
-    if (spans[1]) spans[1].textContent = lang === 'en'
-      ? 'Made with love from Agadir, Morocco'
-      : 'Fait avec amour depuis Agadir, Maroc';
-  }
-
-  // Initialisation au chargement complet de la page
-  document.addEventListener('DOMContentLoaded', function() {
-    console.log('Page chargee - setLang pret');
+var lang = 'fr';
+function setLang(l) {
+  lang = l;
+  document.getElementById('btn-fr').style.opacity = l==='fr' ? '1' : '0.5';
+  document.getElementById('btn-en').style.opacity = l==='en' ? '1' : '0.5';
+  document.querySelectorAll('[data-fr]').forEach(function(el) {
+    el.textContent = el.getAttribute('data-'+l) || el.getAttribute('data-fr');
   });
-</script>
-</body>
+  alert('Langue changée: ' + l);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('OK - setLang prêt');
+});
+</script></body>
 </html>
