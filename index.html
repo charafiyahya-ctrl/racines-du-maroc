@@ -259,8 +259,11 @@ nav {
 
 .hero-ctas {
   display: flex;
-  gap: 20px;
+  flex-direction: row;
+  gap: 24px;
   align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
   animation: fadeInUp 1s ease 0.6s both;
 }
 
@@ -305,7 +308,7 @@ nav {
   transition: all 0.3s;
 }
 
-.btn-ghost:hover { color: var(--or); border-color: var(--or); }
+.btn-ghost:hover { color: var(--or); border-color: var(--or); background: rgba(201,168,76,0.08); }
 
 /* HERO DROITE — SHOWCASE */
 .hero-showcase {
@@ -421,11 +424,11 @@ nav {
 
 /* HERO STATS */
 .hero-stats {
-  position: absolute;
-  bottom: 60px;
-  left: 100px;
   display: flex;
   gap: 48px;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid rgba(201,168,76,0.2);
   animation: fadeInUp 1s ease 0.75s both;
 }
 
@@ -1242,6 +1245,21 @@ body.lang-ar .hero-stats { right: 100px; left: auto; }
     <div class="hero-ctas">
       <a href="#collections" class="btn-gold"><span data-fr="Explorer les Collections" data-en="Explore Collections">Explorer les Collections</span></a>
       <a href="#maison" class="btn-ghost" data-fr="Notre Savoir-Faire" data-en="Our Know-How">Notre Savoir-Faire</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-n">100%</div>
+        <div class="stat-l" data-fr="ARTISANAT MAROCAIN" data-en="MOROCCAN CRAFTSMANSHIP">ARTISANAT MAROCAIN</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">48h</div>
+        <div class="stat-l" data-fr="LIVRAISON EUROPE" data-en="EUROPE DELIVERY">LIVRAISON EUROPE</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n">500+</div>
+        <div class="stat-l" data-fr="PIÈCES UNIQUES" data-en="UNIQUE PIECES">PIÈCES UNIQUES</div>
+      </div>
     </div>
   </div>
 
