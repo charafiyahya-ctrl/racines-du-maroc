@@ -1290,20 +1290,7 @@ body.lang-ar .hero-stats { right: 100px; left: auto; }
     </div>
   </div>
 
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-n">100%</div>
-      <div class="stat-l" data-fr="Artisanat Marocain" data-en="Moroccan Craftsmanship">Artisanat Marocain</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n">48h</div>
-      <div class="stat-l" data-fr="Livraison Europe" data-en="Europe Delivery">Livraison Europe</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n">500+</div>
-      <div class="stat-l" data-fr="Pièces Uniques" data-en="Unique Pieces" data-fr="Pièces Uniques" data-en="Unique Pieces">Pièces Uniques</div>
-    </div>
-  </div>
+  
 </section>
 
 <!-- BANDEAU -->
@@ -1328,7 +1315,7 @@ body.lang-ar .hero-stats { right: 100px; left: auto; }
     <div class="section-label-line"></div>
     <span class="section-label-text" data-fr="Univers Racines du Maroc" data-en="The Racines du Maroc Universe">Univers Racines du Maroc</span>
   </div>
-  <h2 class="section-title">Nos <em>Collections</em><br>d'Exception</h2>
+  <h2 class="section-title" data-fr="Nos Collections d'Exception" data-en="Our Collections of Excellence">Nos <em>Collections</em><br>d'Exception</h2>
 
   <div class="collections-grid">
     <div class="coll-item">
@@ -1604,18 +1591,92 @@ body.lang-ar .hero-stats { right: 100px; left: auto; }
 
 
 <script>
-var lang = 'fr';
+var lang = "fr";
+
 function setLang(l) {
   lang = l;
-  document.getElementById('btn-fr').style.opacity = l==='fr' ? '1' : '0.5';
-  document.getElementById('btn-en').style.opacity = l==='en' ? '1' : '0.5';
-  document.querySelectorAll('[data-fr]').forEach(function(el) {
-    el.textContent = el.getAttribute('data-'+l) || el.getAttribute('data-fr');
+
+  // Boutons actifs
+  document.getElementById("btn-fr").style.opacity = l==="fr" ? "1" : "0.5";
+  document.getElementById("btn-en").style.opacity = l==="en" ? "1" : "0.5";
+  document.getElementById("btn-fr").style.fontWeight = l==="fr" ? "700" : "400";
+  document.getElementById("btn-en").style.fontWeight = l==="en" ? "700" : "400";
+
+  // Elements simples avec data-fr / data-en
+  document.querySelectorAll("[data-fr]").forEach(function(el) {
+    var text = el.getAttribute("data-"+l) || el.getAttribute("data-fr");
+    if (text) el.textContent = text;
   });
-  alert('Langue changée: ' + l);
+
+  // Titres avec HTML interne
+  var titres = {
+    ".collections .section-title": {
+      fr: "Nos <em>Collections</em><br>d&rsquo;Exception",
+      en: "Our <em>Collections</em><br>of Excellence"
+    },
+    ".produits .section-title": {
+      fr: "Pi&egrave;ces <em>Vedettes</em>",
+      en: "Featured <em>Pieces</em>"
+    },
+    ".maison-content .section-title": {
+      fr: "La Maison<br><em>Racines du Maroc</em>",
+      en: "The House<br><em>Racines du Maroc</em>"
+    },
+    ".nl-title": {
+      fr: "Acc&egrave;s <em>Privil&eacute;gi&eacute;</em><br>aux Nouvelles Pi&egrave;ces",
+      en: "Exclusive <em>Access</em><br>to New Pieces"
+    }
+  };
+
+  Object.keys(titres).forEach(function(sel) {
+    var el = document.querySelector(sel);
+    if (el) el.innerHTML = titres[sel][l] || titres[sel]["fr"];
+  });
+
+  // Hero description
+  var heroDesc = document.querySelector(".hero-desc");
+  if (heroDesc) {
+    heroDesc.textContent = l === "en"
+      ? "Kaftan, Djellaba, Babouches and Art of Living - exceptional pieces crafted by Moroccan artisans, delivered across Europe."
+      : "Kaftan, Djellaba, Babouches et Art de Vivre - des pieces d exception faconnees par les artisans marocains, livrees partout en Europe.";
+  }
+
+  // Citation
+  var quote = document.querySelector(".arch-quote");
+  if (quote) {
+    quote.innerHTML = l === "en"
+      ? "&ldquo;Every thread tells<br>the story of a people<br>and their beauty&rdquo;"
+      : "&ldquo;Chaque fil raconte<br>l&rsquo;histoire d&rsquo;un peuple<br>et de sa beaut&eacute;&rdquo;";
+  }
+
+  // Maison paragraphe
+  var maisonP = document.querySelector(".maison-content > p");
+  if (maisonP) {
+    maisonP.textContent = l === "en"
+      ? "Each piece is carefully selected from Moroccan artisans - weavers from Fes, embroiderers from Marrakech, potters from Safi. We bring this exceptional heritage to your door across Europe."
+      : "Chaque piece est selectionnee directement aupres des artisans marocains - tisserands de Fes, brodeurs de Marrakech, potiers de Safi.";
+  }
+
+  // Newsletter input
+  var nlInput = document.querySelector(".nl-input");
+  if (nlInput) nlInput.placeholder = l === "en" ? "Your email address..." : "Votre adresse email...";
+
+  // Footer description
+  var footerDesc = document.querySelector(".footer-brand-desc");
+  if (footerDesc) {
+    footerDesc.textContent = l === "en"
+      ? "Exceptional Moroccan fashion delivered across Europe. Authentic craftsmanship, unique pieces."
+      : "Mode traditionnelle marocaine livree partout en Europe. Artisanat authentique, pieces uniques.";
+  }
+
+  // Footer bottom
+  var fbSpans = document.querySelectorAll(".footer-bottom span");
+  if (fbSpans[0]) fbSpans[0].textContent = l === "en" ? "2026 Racines du Maroc - All rights reserved" : "2026 Racines du Maroc - Tous droits reserves";
+  if (fbSpans[1]) fbSpans[1].textContent = l === "en" ? "Made with love from Agadir, Morocco" : "Fait avec amour depuis Agadir, Maroc";
 }
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('OK - setLang prêt');
+
+document.addEventListener("DOMContentLoaded", function() {
+  console.log("setLang OK");
 });
 </script></body>
 </html>
